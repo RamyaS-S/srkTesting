@@ -5,17 +5,17 @@ from pages.loginpageobjects import loginPOM
 driver = webdriver.Chrome()
 
 url = "https://practicetestautomation.com/practice-test-login/"
+def test_log(self):
+    driver.get(url)
 
-driver.get(url)
+    self.loginPage_Obj = loginPOM(driver)
 
-loginPage_Obj = loginPOM(driver)
+    self.loginPage_Obj.enterUserName("student")
+    self.loginPage_Obj.enterPassWord("Password123")
+    HomePOM_Obj = self.loginPage_Obj.clickSubmitButton()
 
-loginPage_Obj.enterUserName("student")
-loginPage_Obj.enterPassWord("Password123")
-HomePOM_Obj = loginPage_Obj.clickSubmitButton()
+    successText = HomePOM_Obj.getLoggedSuccessText()
+    print(successText)
 
-successText = HomePOM_Obj.getLoggedSuccessText()
-print(successText)
-
-driver.close()
+    driver.close()
 

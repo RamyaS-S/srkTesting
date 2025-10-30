@@ -1,22 +1,18 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON = "python3"
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
-                checkout scm   // Uses the Git repo and branch configured in Jenkins job
+                checkout scm
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh """
-                ${env.PYTHON} -m venv venv
-                source venv/bin/activate
+                bat """
+                python -m venv venv
+                call venv\\Scripts\\activate
                 pip install --upgrade pip
                 pip install -r requirements.txt
                 """
@@ -25,8 +21,8 @@ pipeline {
 
         stage('Run Pytest') {
             steps {
-                sh """
-                source venv/bin/activate
+                bat """
+                call venv\\Scripts\\activate
                 pytest tests/ --html=report.html --self-contained-html
                 """
             }
